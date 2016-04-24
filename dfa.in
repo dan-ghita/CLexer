@@ -1,0 +1,100 @@
+identifier float integer string char preprocessor_directive caret colon dot tilde plus minus assignment_operator and pipe or ampersand LT GT LTE GTE EQ stream_operator exclamation_mark question_mark semicolon comma operator slash asterisk line_comment multiline_comment opened_parenthesis closed_parenthesis opened_bracket closed_bracket opened_braces closed_braces
+int float long unsigned string char include pragma return if while for struct
+# identifier
+init any_char identifier
+identifier any_char identifier
+identifier any_digit identifier
+identifier _ identifier
+identifier . identifier
+# int
+init any_digit integer
+integer any_digit integer
+# float
+integer . float
+float any_digit float
+# char
+init ' char_content
+char_content any_char char_expecting_apostrophe
+char_content any_digit char_expecting_apostrophe
+char_content anything_else char_expecting_apostrophe
+char_content whitespace char_expecting_apostrophe
+char_content \ char_escape
+char_escape any_char char_expecting_apostrophe
+char_escape any_digit char_expecting_apostrophe
+char_escape whitespace char_expecting_apostrophe
+char_escape anything_else char_expecting_apostrophe
+char_expecting_apostrophe ' char
+char_content ' char
+# string
+init " string_content
+string_content any_char string_content
+string_content any_digit string_content
+string_content anything_else string_content
+string_content whitespace_no_endl string_content
+# string_escape characters
+string_content \ string_escape
+string_escape any_char string_content
+string_escape any_digit string_content
+string_escape anything_else string_content
+string_escape whitespace string_content
+string_content " string
+# include
+init # preprocessor_directive
+preprocessor_directive any_char preprocessor_directive
+preprocessor_directive any_digit preprocessor_directive
+preprocessor_directive _ preprocessor_directive
+# parentheses
+init ( opened_parenthesis
+init ) closed_parenthesis
+init [ opened_bracket
+init ] closed_bracket
+init { opened_braces
+init } closed_braces
+# semicolon
+init ; semicolon
+# comma
+init , comma
+# dot
+init . dot
+# operator
+init ! exclamation_mark
+init ~ tilde
+init + plus
+init - minus
+init = assignment_operator
+assignment_operator = EQ
+init & ampersand
+ampersand & and
+init | pipe
+pipe | or
+init < LT
+LT = LTE
+init > GT
+GT = GTE
+LT < stream_operator
+GT > stream_operator
+init ? question_mark
+init : colon
+init * asterisk
+init / slash
+init ^ caret
+# line comment
+slash / line_comment_content
+line_comment_content any_char line_comment_content
+line_comment_content any_digit line_comment_content
+line_comment_content whitespace line_comment_content
+line_comment_content anything_else line_comment_content
+line_comment_content endl line_comment
+# multi-line comment
+slash * multiline_comment_content
+multiline_comment_content any_char multiline_comment_content
+multiline_comment_content any_digit multiline_comment_content
+multiline_comment_content whitespace multiline_comment_content
+multiline_comment_content anything_else multiline_comment_content
+multiline_comment_content * multiline_comment_expecting_slash
+multiline_comment_expecting_slash any_char multiline_comment_content
+multiline_comment_expecting_slash any_digit multiline_comment_content
+multiline_comment_expecting_slash whitespace multiline_comment_content
+multiline_comment_expecting_slash anything_else multiline_comment_content
+multiline_comment_expecting_slash * multiline_comment_expecting_slash
+multiline_comment_expecting_slash / multiline_comment
