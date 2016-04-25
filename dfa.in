@@ -1,5 +1,5 @@
-identifier float integer string char preprocessor_directive caret colon dot tilde plus minus assignment_operator and pipe or ampersand LT GT LTE GTE EQ stream_operator exclamation_mark question_mark semicolon comma operator slash asterisk line_comment multiline_comment opened_parenthesis closed_parenthesis opened_bracket closed_bracket opened_braces closed_braces
-int float long unsigned string char include pragma return if while for struct
+identifier float integer string char preprocessor_directive caret colon dot tilde plus minus assignment_operator decrement_operator increment_operator NEQ and pipe or ampersand LT GT LTE GTE EQ stream_operator exclamation_mark question_mark semicolon comma operator slash asterisk line_comment multiline_comment opened_parenthesis closed_parenthesis opened_bracket closed_bracket opened_braces closed_braces
+void int float long unsigned string char include pragma return if while for struct
 # identifier
 init any_char identifier
 identifier any_char identifier
@@ -18,10 +18,12 @@ char_content any_char char_expecting_apostrophe
 char_content any_digit char_expecting_apostrophe
 char_content anything_else char_expecting_apostrophe
 char_content whitespace char_expecting_apostrophe
+char_content endl char_expecting_apostrophe
 char_content \ char_escape
 char_escape any_char char_expecting_apostrophe
 char_escape any_digit char_expecting_apostrophe
 char_escape whitespace char_expecting_apostrophe
+char_escape endl char_expecting_apostrophe
 char_escape anything_else char_expecting_apostrophe
 char_expecting_apostrophe ' char
 char_content ' char
@@ -30,13 +32,14 @@ init " string_content
 string_content any_char string_content
 string_content any_digit string_content
 string_content anything_else string_content
-string_content whitespace_no_endl string_content
+string_content whitespace string_content
 # string_escape characters
 string_content \ string_escape
 string_escape any_char string_content
 string_escape any_digit string_content
 string_escape anything_else string_content
 string_escape whitespace string_content
+string_escape endl string_content
 string_content " string
 # include
 init # preprocessor_directive
@@ -58,9 +61,12 @@ init , comma
 init . dot
 # operator
 init ! exclamation_mark
+exclamation_mark = NEQ
 init ~ tilde
 init + plus
+plus + increment_operator
 init - minus
+minus - decrement_operator
 init = assignment_operator
 assignment_operator = EQ
 init & ampersand
@@ -83,6 +89,7 @@ slash / line_comment_content
 line_comment_content any_char line_comment_content
 line_comment_content any_digit line_comment_content
 line_comment_content whitespace line_comment_content
+line_comment_content endl line_comment_content
 line_comment_content anything_else line_comment_content
 line_comment_content endl line_comment
 # multi-line comment
@@ -90,11 +97,13 @@ slash * multiline_comment_content
 multiline_comment_content any_char multiline_comment_content
 multiline_comment_content any_digit multiline_comment_content
 multiline_comment_content whitespace multiline_comment_content
+multiline_comment_content endl multiline_comment_content
 multiline_comment_content anything_else multiline_comment_content
 multiline_comment_content * multiline_comment_expecting_slash
 multiline_comment_expecting_slash any_char multiline_comment_content
 multiline_comment_expecting_slash any_digit multiline_comment_content
 multiline_comment_expecting_slash whitespace multiline_comment_content
+multiline_comment_expecting_slash endl multiline_comment_content
 multiline_comment_expecting_slash anything_else multiline_comment_content
 multiline_comment_expecting_slash * multiline_comment_expecting_slash
 multiline_comment_expecting_slash / multiline_comment
