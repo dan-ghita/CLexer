@@ -8,7 +8,7 @@ e12/**//*"*/"*////////*"
 *//*
 
 
-  kjk*/  "/*lkjlkj'e'""/*"*/"
+  kjk*/  "/*lkjlkj'e'""/*"*/
 
 
 
@@ -18,7 +18,7 @@ void main(int argc,char *argv[]){
 ;f();
 
 "ana \
-are
+are \
 mere"
 
 return 0;

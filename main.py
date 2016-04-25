@@ -3,14 +3,8 @@ class Token:
         self.type = type
         self.value = value
 
-    def append_character(self, c):
-        self.value += c
-
-    def set_type(self, type):
-        self.type = type
-
     def __str__(self):
-        return self.type + ': ' + self.value
+        return self.type + ': ' + repr(self.value)
 
 
 class Parser:
@@ -93,7 +87,6 @@ class Parser:
             self.index += 1
 
         if not final_state:
-            print(line_index)
             self.error = 'Error at Line: ' + str(line_count) + ' ' + \
                          'Row: ' + str(self.index - line_index) + ' ' + \
                          'Unexpected character: ' + repr(symbol)
@@ -153,14 +146,18 @@ def read_dfa():
 
             build_dfa(dfa, state1, symbol, state2)
 
-        print(dfa)
-
     return dfa, final_states, key_words
 
 
 def read_source_file():
     with open('main.cpp', 'r') as f:
         return f.read()
+
+
+def append_to_file(text):
+    with open("tokens.out", "a") as f:
+        f.write(str(text))
+        f.write('\n')
 
 
 def main():
@@ -171,12 +168,19 @@ def main():
 
     parser = Parser(dfa, source_file, final_states, key_words)
 
+    # clear output file
+    open('tokens.out', 'w').close()
+
     while parser.has_next:
         token = parser.get_token()
         if parser.has_error:
+            append_to_file(parser.error)
             print(parser.error)
             break
         else:
-            print(token)
+            if 'comment' in token.type:
+                print(token)
+            else:
+                append_to_file(token)
 
 main()
