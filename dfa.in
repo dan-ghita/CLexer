@@ -1,5 +1,5 @@
-identifier float integer string char exponential preprocessor_directive caret colon dot tilde plus minus assignment_operator decrement_operator increment_operator NEQ and pipe or ampersand LT GT LTE GTE EQ stream_operator exclamation_mark question_mark semicolon comma operator slash asterisk line_comment multiline_comment opened_parenthesis closed_parenthesis opened_bracket closed_bracket opened_braces closed_braces
-void int float long unsigned string char include pragma return if while for struct
+underscore hex identifier float integer plus_eq string char hex_number exponential preprocessor_directive caret colon dot at tilde plus minus assignment_operator decrement_operator increment_operator NEQ and pipe or ampersand LT GT LTE GTE EQ stream_operator exclamation_mark question_mark semicolon comma operator slash asterisk line_comment multiline_comment opened_parenthesis closed_parenthesis opened_bracket closed_bracket opened_braces closed_braces
+void int float long unsigned string char include pragma return if while for struct vector
 # identifier
 init any_char identifier
 identifier any_char identifier
@@ -7,12 +7,24 @@ identifier any_digit identifier
 identifier _ identifier
 # int
 init any_digit integer
+minus any_digit integer
 integer any_digit integer
 integer e exponential_expecting_exponent
+# hex
+minus 0 hex
+init 0 hex
+hex any_digit integer
+hex x hex_expecting_char_or_digit
+hex X hex_expecting_char_or_digit
+hex_expecting_char_or_digit hex_char hex_number
+hex_expecting_char_or_digit any_digit hex_number
+hex_number hex_char hex_number
+hex_number any_digit hex_number
 # float
 integer . float
 float any_digit float
 float e exponential_expecting_exponent
+float E exponential_expecting_exponent
 # exponential
 exponential_expecting_exponent any_digit exponential
 exponential_expecting_exponent - signed_exponential
@@ -64,14 +76,16 @@ init } closed_braces
 init ; semicolon
 # comma
 init , comma
-# dot
+init _ underscore
 init . dot
+init @ at
 # operator
 init ! exclamation_mark
 exclamation_mark = NEQ
 init ~ tilde
 init + plus
 plus + increment_operator
+plus = plus_eq
 init - minus
 minus - decrement_operator
 init = assignment_operator
@@ -86,9 +100,13 @@ init > GT
 GT = GTE
 LT < stream_operator
 GT > stream_operator
+stream_operator = operator
 init ? question_mark
 init : colon
 init * asterisk
+asterisk = operator
+slash = operator
+minus = operator
 init / slash
 init ^ caret
 # line comment

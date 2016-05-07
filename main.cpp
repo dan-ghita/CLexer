@@ -1,25 +1,16 @@
-e12/**//*"*/"*////////*"
-*/  /* lkj lkjlkokj 
-
-   ;lkjlj ;lj ;l 
+int e25  ;;/* kjik k kh kj 
+ghuiy i     e
 
 
-
-*//*
-
-
-  kjk*/  "/*lkjlkj'e'""/*"*/
+  'a'"'k'""""\'\n'  *//**/   /***/  
 
 
 
-/ * */
-void main(int argc,char *argv[]){
-"12e-25" if((e12.f+++=12e-3<<=12.3e-12+*ab12.ef)&&qwe.f.e/ *f+++++g){;}'0'
-;f();
+  /*
 
-"ana \
-are \
-mere"
 
-return 0;
-}"as"
+    **/"  /*ah'h'*/"'"'"'" '('void main(){}{
+
+if((a+++12e3==e12.e+12)*/e20+++=++20e-3<<=1)  a**p*/*/*//++e+3;
+return 0;"jkhkjk      \""lkjlkjlkjkl
+"}"/* skeuthier*/

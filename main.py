@@ -1,13 +1,15 @@
 class Token:
-    def __init__(self, type, value):
+    def __init__(self, type, value_index):
         self.type = type
-        self.value = value
+        self.value_index = value_index
 
     def __str__(self):
-        return self.type + ': ' + repr(self.value)
+        return self.type + ': ' + repr(Parser.token_strings[self.value_index])
 
 
 class Parser:
+    token_strings = []
+
     def __init__(self, dfa, source_file, final_states, key_words):
         self.dfa = dfa
         self.source_file = source_file
@@ -18,6 +20,7 @@ class Parser:
         self.line_number = 1
         self.line_index = 0
         self.initial_state = 'init'
+        self.eof = False
 
     @property
     def current_symbol(self):
@@ -50,7 +53,8 @@ class Parser:
 
     def get_token(self):
         if not self.has_next:
-            self.error = 'Parser has no more tokens'
+            # self.error = 'Parser has no more tokens'
+            self.eof = True
             return
 
         token = ''
@@ -95,7 +99,15 @@ class Parser:
             self.line_index = final_line_index
             self.index = final_state_index
             state = 'key_word' if final_token in self.key_words else final_state
-            return Token(state, final_token)
+
+            if 'comment' in state:
+                return self.get_token()
+
+            if final_token in self.token_strings:
+                return Token(state, self.token_strings.index(final_token))
+            else:
+                self.token_strings.append(final_token)
+                return Token(state, len(self.token_strings) - 1)
 
 
 def char_range(c1, c2):
@@ -109,6 +121,11 @@ def build_dfa(dfa, state1, symbol, state2):
         for c in char_range('a', 'z'):
             dfa[(state1, c)] = state2
         for c in char_range('A', 'Z'):
+            dfa[(state1, c)] = state2
+    if symbol == 'hex_char':
+        for c in char_range('a', 'f'):
+            dfa[(state1, c)] = state2
+        for c in char_range('A', 'F'):
             dfa[(state1, c)] = state2
     elif symbol == 'any_digit':
         for i in range(0, 10):
@@ -173,14 +190,13 @@ def main():
 
     while parser.has_next:
         token = parser.get_token()
-        if parser.has_error:
+        if parser.eof:
+            return
+        elif parser.has_error:
             append_to_file(parser.error)
             print(parser.error)
             break
         else:
-            if 'comment' in token.type:
-                print(token)
-            else:
-                append_to_file(token)
+            append_to_file(token)
 
 main()
